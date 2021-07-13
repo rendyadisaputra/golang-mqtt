@@ -58,6 +58,8 @@ func main() {
 	// timer := time.NewTicker(3 * time.Second)
 	wait := make(chan bool)
 	go func() {
+		log.Printf("waiting for messages")
+		
 	}()
     <-wait
 }
