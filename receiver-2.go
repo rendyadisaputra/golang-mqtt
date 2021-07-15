@@ -33,7 +33,7 @@ func createClientOptions(clientId string, uri *url.URL) *mqtt.ClientOptions {
 }
  
 func listen(uri *url.URL, topic string) {
-	client := connect("sub", uri)
+	client := connect("CID:sub", uri)
 	client.Subscribe(topic, 0, func(client mqtt.Client, msg mqtt.Message) {
 		
 		fmt.Printf("* Tictoc Topic [%s] %s\n", msg.Topic(), string(msg.Payload()))
@@ -41,24 +41,25 @@ func listen(uri *url.URL, topic string) {
 }
  
 func main() {
-	uri, err := url.Parse("mqtt://user:pass@localhost:1883/testtopic/#")
+	uri, err := url.Parse("mqtt://testbroh:pass@localhost:1883/testtopic/#")
 	// uri = "tcp://localhost:1883"
 	if err != nil {
 		log.Fatal(err)
 	}
 	topic := uri.Path[1:len(uri.Path)]
-	log.Printf(" [x] topic string %s", topic)
+	log.Printf(" [x] %s", topic)
 	if topic == "" {
 		topic = "test"
 	}
  
-	client := connect("pub", uri)
-	timer := time.NewTicker(3 * time.Second)
-	
-	for t := range timer.C {
-		log.Printf(" [x] TOPIC ", topic)
-		log.Printf(" [x] Sending ", t.String())
-
-		client.Publish(topic, 0, false, t.String())
-	}
+	go listen(uri, topic)
+ 
+	// client := connect("pub", uri)
+	// timer := time.NewTicker(3 * time.Second)
+	wait := make(chan bool)
+	go func() {
+		log.Printf("waiting for messages")
+		
+	}()
+    <-wait
 }

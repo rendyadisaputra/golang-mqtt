@@ -41,7 +41,7 @@ func listen(uri *url.URL, topic string) {
 }
  
 func main() {
-	uri, err := url.Parse("mqtt://user:pass@localhost:1883/testtopic/#")
+	uri, err := url.Parse("mqtt://testbroh:pass@localhost:1883/testtopic/#")
 	// uri = "tcp://localhost:1883"
 	if err != nil {
 		log.Fatal(err)
@@ -62,4 +62,5 @@ func main() {
 		
 	}()
     <-wait
+	log.Printf("")
 }
